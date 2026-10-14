@@ -1,0 +1,14 @@
+docker network create pythonapp
+docker run -dit --name python-container --network pythonapp -p 5000:5000 python:3.12-slim bash
+docker cp "C:\Users\LAPPKART.COM\Desktop\app.py" python-container:/app.py
+docker exec -it python-container pip install flask
+docker exec -it python-container pip install psycopg2-binary
+docker exec -it python-container python /app.py
+docker run -d `
+  --name postgres-db `
+  --network pythonapp `
+  -e POSTGRES_DB=login `
+  -e POSTGRES_USER=postgres `
+  -e POSTGRES_PASSWORD='India#201305' `
+  -p 5432:5432 `
+  postgres:16
